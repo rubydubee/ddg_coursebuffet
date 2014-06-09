@@ -12,11 +12,3 @@
 .tile--coursebuffet .tile__body {
   height: 9em;
 }
-
-.tile--coursebuffet .tile__content {
-  height: 0em;
-}
-
-.is-mobile .tile--coursebuffet .tile__content {
-  height: 7em;
-}

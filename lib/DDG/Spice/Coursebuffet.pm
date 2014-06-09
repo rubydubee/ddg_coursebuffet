@@ -10,6 +10,18 @@ primary_example_queries "computer science course";
 secondary_example_queries "computer science coursera";
 description "Course catalog for online learning!";
 name "CourseBuffet";
+source "CourseBuffet";
+
+# could not find any relevant category, more like 'education'
+category "special"; 
+
+# We have all kinds of courses listing few of those categories here
+topics "math", "programming", "computing", "science", "web_design";
+
+code_url "https://github.com/rubydubee/ddg_coursebuffet/blob/master/lib/DDG/Spice/Coursebuffet.pm";
+attribution web => ["http://www.coursebuffet.com", "Pradyumna Dandwate"],
+            twitter => ["coursebuffet"],
+            github  => ["rubydubee", "Pradyumna Dandwate"];
 
 my @title_list = share('course_titles.txt')->slurp;
 my @course_titles = ();
@@ -22,11 +34,13 @@ triggers query_lc => qr/\s*/;
 
 handle query_lc => sub {
 
+  # MOOC provider specific search returns courses for the specified provider
   $_ =~ /(coursera|edx|udacity|saylor|novoed|futurelearn|iversity|open2study|openuped)/;
   if ($&) {
     return "provider", $&, "$` $'";
   }
 
+  # generic course search
   $_ =~ /course/;
   if ($&) {
     return "standard","courses", "$` $'";
@@ -34,6 +48,7 @@ handle query_lc => sub {
 
   my $query = $_;
 
+  # exact title match returns similar courses(but from different MOOC provider or university) as well
   my @matches = grep { /^$query$/i } @course_titles;
   
   if(@matches) {
