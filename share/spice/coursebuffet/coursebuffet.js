@@ -1,7 +1,6 @@
 (function (env) {
   "use strict";
   env.ddg_spice_coursebuffet = function(api_result){
-    // alert(api_result["courses"][0]["name"]);
     if (api_result["error"]) {
       return Spice.failed('coursebuffet');
     };
@@ -11,6 +10,7 @@
       name: 'Online Courses',
       data: api_result["courses"],
       meta: {
+        itemType: "Courses",
         sourceName: "CourseBuffet",
         sourceUrl: "http://www.coursebuffet.com"+api_result["more_link"]
       },
